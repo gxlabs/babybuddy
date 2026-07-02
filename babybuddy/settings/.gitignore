@@ -5,5 +5,7 @@
 !clever-cloud.py
 !development.py
 !gitpod.py
+!homeassistant.py
 !production.example.py
+!production.py
 !test.py
