@@ -3,7 +3,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.urls import include, path, reverse_lazy
+from django.urls import include, path, re_path, reverse_lazy
+from django.views.static import serve as static_serve
 
 from . import views
 
@@ -61,7 +62,13 @@ if settings.DEBUG:  # pragma: no cover
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Serve user-uploaded media (child/event photos) from the Django app even in
-# production. Baby Buddy is intended to run inside a trusted network and the
-# fork has no reverse proxy in the way, so exposing MEDIA_URL directly is fine.
-if not settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# production. django.conf.urls.static.static() no-ops when DEBUG=False so
+# wire the serve view directly. Baby Buddy is intended to run inside a
+# trusted network and the fork has no reverse proxy in the way.
+urlpatterns += [
+    re_path(
+        r"^%s(?P<path>.*)$" % settings.MEDIA_URL.lstrip("/"),
+        static_serve,
+        {"document_root": settings.MEDIA_ROOT},
+    ),
+]
