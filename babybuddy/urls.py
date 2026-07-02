@@ -59,3 +59,9 @@ urlpatterns = [
 
 if settings.DEBUG:  # pragma: no cover
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Serve user-uploaded media (child/event photos) from the Django app even in
+# production. Baby Buddy is intended to run inside a trusted network and the
+# fork has no reverse proxy in the way, so exposing MEDIA_URL directly is fine.
+if not settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
