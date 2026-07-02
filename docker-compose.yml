@@ -1,0 +1,24 @@
+services:
+  babybuddy:
+    build: .
+    image: gxlabs/babybuddy:latest
+    container_name: babybuddy-fork
+    restart: unless-stopped
+    ports:
+      - "8002:8000"
+    volumes:
+      # Bind-mount the persistent data (SQLite DB + media uploads).
+      # Copy the HA add-on's db.sqlite3 into ./data/db.sqlite3 before first run
+      # to cut over from the add-on.
+      - ./data:/data
+    environment:
+      DATABASE_URL: sqlite:////data/db.sqlite3
+      MEDIA_ROOT: /data/media
+      DJANGO_SETTINGS_MODULE: babybuddy.settings.production
+      ALLOWED_HOSTS: "*"
+      CSRF_TRUSTED_ORIGINS: "http://homeassistant.local:8002,http://localhost:8002"
+      # Set a real secret before first run. Generate one with:
+      #   python -c "import secrets; print(secrets.token_urlsafe(50))"
+      SECRET_KEY: ${SECRET_KEY:-please-change-me-in-.env}
+      # Bind at container port 8000. Compose maps :8002 -> :8000.
+      PORT: "8000"
