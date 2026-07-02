@@ -272,6 +272,12 @@ class DiaperChange(models.Model):
     )
     amount = models.FloatField(blank=True, null=True, verbose_name=_("Amount"))
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to="diaperchange/images/",
+        verbose_name=_("Image"),
+    )
     tags = TaggableManager(blank=True, through=Tagged)
 
     objects = models.Manager()
@@ -343,6 +349,12 @@ class Feeding(models.Model):
     )
     amount = models.FloatField(blank=True, null=True, verbose_name=_("Amount"))
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to="feeding/images/",
+        verbose_name=_("Image"),
+    )
     tags = TaggableManager(blank=True, through=Tagged)
 
     settings = FeedingSettings()
@@ -509,6 +521,12 @@ class Pumping(models.Model):
     )
     amount = models.FloatField(blank=False, null=False, verbose_name=_("Amount"))
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to="pumping/images/",
+        verbose_name=_("Image"),
+    )
     tags = TaggableManager(blank=True, through=Tagged)
 
     objects = models.Manager()
@@ -552,6 +570,12 @@ class Sleep(models.Model):
         editable=False, null=True, verbose_name=_("Duration")
     )
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to="sleep/images/",
+        verbose_name=_("Image"),
+    )
     tags = TaggableManager(blank=True, through=Tagged)
 
     objects = models.Manager()
@@ -709,6 +733,12 @@ class TummyTime(models.Model):
     )
     milestone = models.CharField(
         blank=True, max_length=255, verbose_name=_("Milestone")
+    )
+    image = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to="tummytime/images/",
+        verbose_name=_("Image"),
     )
     tags = TaggableManager(blank=True, through=Tagged)
 

@@ -128,6 +128,7 @@ class PumpingSerializer(CoreModelWithDurationSerializer, TaggableSerializer):
             "end",
             "duration",
             "notes",
+            "image",
             "tags",
             "timer",
         )
@@ -160,6 +161,7 @@ class DiaperChangeSerializer(CoreModelSerializer, TaggableSerializer):
             "color",
             "amount",
             "notes",
+            "image",
             "tags",
         )
 
@@ -178,6 +180,7 @@ class FeedingSerializer(CoreModelWithDurationSerializer, TaggableSerializer):
             "method",
             "amount",
             "notes",
+            "image",
             "tags",
         )
 
@@ -230,6 +233,7 @@ class SleepSerializer(CoreModelWithDurationSerializer, TaggableSerializer):
             "duration",
             "nap",
             "notes",
+            "image",
             "tags",
         )
 
@@ -291,6 +295,7 @@ class TummyTimeSerializer(CoreModelWithDurationSerializer, TaggableSerializer):
             "timer",
             "duration",
             "milestone",
+            "image",
             "tags",
         )
 
