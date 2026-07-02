@@ -1,7 +1,15 @@
-"""Production settings for the gxlabs Docker deployment.
+"""Environment-driven production settings.
 
-Everything is driven by environment variables so the same image can be
-reused across hosts. See the Dockerfile / DEPLOY.md for the expected env.
+All configuration comes from environment variables so a single image can
+be reused across hosts. Expected environment:
+
+* ``SECRET_KEY`` (required)
+* ``DATABASE_URL`` (default: sqlite at ``../data/db.sqlite3``)
+* ``ALLOWED_HOSTS`` (comma-separated, default: ``*``)
+* ``CSRF_TRUSTED_ORIGINS`` (comma-separated, optional)
+* ``MEDIA_ROOT`` (default: ``../data/media``)
+* ``MEDIA_URL`` (default: ``/media/``)
+* ``DEBUG`` (default: off)
 """
 import os
 import dj_database_url
