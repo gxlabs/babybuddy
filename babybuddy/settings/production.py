@@ -35,3 +35,9 @@ DATABASES = {
 
 MEDIA_ROOT = os.environ.get("MEDIA_ROOT", os.path.join(BASE_DIR, "../data/media"))  # noqa: F405
 MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
+
+# Trust the reverse proxy's X-Forwarded-Proto so Django knows the original
+# request was HTTPS. Without this, absolute URLs for uploaded media come out
+# as http:// even when the client hit https://.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
