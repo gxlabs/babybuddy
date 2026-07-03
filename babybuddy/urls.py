@@ -27,7 +27,9 @@ def _authenticated_media_serve(request, path, document_root=None):
     for auth in authenticators:
         try:
             result = auth.authenticate(request)
-        except AuthenticationFailed:
+        except Exception:
+            # Anything raised during auth (bad token, DB, missing session)
+            # counts as "not authenticated" — try the next authenticator.
             result = None
         if result is not None:
             user, _ = result
