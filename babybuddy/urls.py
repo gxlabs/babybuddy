@@ -3,10 +3,40 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.http import HttpResponse
 from django.urls import include, path, re_path, reverse_lazy
 from django.views.static import serve as static_serve
+from rest_framework.authentication import (
+    SessionAuthentication,
+    TokenAuthentication,
+)
+from rest_framework.exceptions import AuthenticationFailed
 
 from . import views
+
+
+def _authenticated_media_serve(request, path, document_root=None):
+    """
+    /media/ served by Django gated by the same auth as the REST API. Accepts
+    either an `Authorization: Token <key>` header (for the iOS app / API
+    clients) or an existing Django session cookie (for the web UI). Any other
+    request gets a 401 so /media/<uuid>.jpg can't be fetched anonymously.
+    """
+    authenticators = [TokenAuthentication(), SessionAuthentication()]
+    user = None
+    for auth in authenticators:
+        try:
+            result = auth.authenticate(request)
+        except AuthenticationFailed:
+            result = None
+        if result is not None:
+            user, _ = result
+            break
+    if user is None or not user.is_authenticated:
+        resp = HttpResponse("Authentication required", status=401)
+        resp["WWW-Authenticate"] = 'Token realm="babybuddy"'
+        return resp
+    return static_serve(request, path, document_root=document_root)
 
 app_patterns = [
     path("login/", auth_views.LoginView.as_view(), name="login"),
@@ -68,7 +98,7 @@ if settings.DEBUG:  # pragma: no cover
 urlpatterns += [
     re_path(
         r"^%s(?P<path>.*)$" % settings.MEDIA_URL.lstrip("/"),
-        static_serve,
+        _authenticated_media_serve,
         {"document_root": settings.MEDIA_ROOT},
     ),
 ]
