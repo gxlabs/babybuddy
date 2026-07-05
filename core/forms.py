@@ -233,7 +233,7 @@ class DiaperChangeForm(CoreModelForm, TaggableModelForm):
     fieldsets = [
         {"fields": ["child", "time"], "layout": "required"},
         {
-            "fields": ["wet", "solid"],
+            "fields": ["wet", "solid", "blowout"],
             "layout": "choices",
             "layout_attrs": {"label": "Contents"},
         },
@@ -243,7 +243,7 @@ class DiaperChangeForm(CoreModelForm, TaggableModelForm):
 
     class Meta:
         model = models.DiaperChange
-        fields = ["child", "time", "wet", "solid", "color", "amount", "notes", "tags"]
+        fields = ["child", "time", "wet", "solid", "blowout", "color", "amount", "notes", "tags"]
         widgets = {
             "child": ChildRadioSelect(),
             "color": PillRadioSelect(),

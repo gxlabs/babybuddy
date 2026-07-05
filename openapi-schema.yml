@@ -5657,6 +5657,8 @@ components:
           type: boolean
         solid:
           type: boolean
+        blowout:
+          type: boolean
         color:
           enum:
             - black

@@ -158,6 +158,7 @@ class DiaperChangeSerializer(CoreModelSerializer, TaggableSerializer):
             "time",
             "wet",
             "solid",
+            "blowout",
             "color",
             "amount",
             "notes",

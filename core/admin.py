@@ -88,8 +88,8 @@ class DiaperChangeImportExportResource(ImportExportResourceBase):
 
 @admin.register(models.DiaperChange)
 class DiaperChangeAdmin(ImportExportMixin, ExportActionMixin, admin.ModelAdmin):
-    list_display = ("child", "time", "wet", "solid", "color")
-    list_filter = ("child", "wet", "solid", "color", "tags")
+    list_display = ("child", "time", "wet", "solid", "blowout", "color")
+    list_filter = ("child", "wet", "solid", "blowout", "color", "tags")
     search_fields = (
         "child__first_name",
         "child__last_name",

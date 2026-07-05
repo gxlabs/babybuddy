@@ -271,6 +271,10 @@ class DiaperChange(models.Model):
         verbose_name=_("Color"),
     )
     amount = models.FloatField(blank=True, null=True, verbose_name=_("Amount"))
+    blowout = models.BooleanField(
+        default=False,
+        verbose_name=_("Blowout"),
+    )
     notes = models.TextField(blank=True, null=True, verbose_name=_("Notes"))
     image = models.ImageField(
         blank=True,

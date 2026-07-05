@@ -24,7 +24,7 @@ class BMIFilter(TagFilter):
 class DiaperChangeFilter(TagFilter):
     class Meta:
         model = models.DiaperChange
-        fields = ["child", "wet", "solid", "color"]
+        fields = ["child", "wet", "solid", "blowout", "color"]
 
 
 class FeedingFilter(TagFilter):
